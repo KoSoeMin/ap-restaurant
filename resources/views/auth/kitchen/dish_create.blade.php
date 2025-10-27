@@ -2,71 +2,91 @@
 
 @section('content')
 
- <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+<!-- Content Wrapper -->
+<div class="content-wrapper">
+    <!-- Content Header -->
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Kitchen Pannel Page</h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Kitchen Panel</h1>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="/dish" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.content-header -->
 
-    <!-- Main content -->
+    <!-- Main Content -->
     <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-           <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Create delicious Dish</h3>
-            <a href="/dish" class="btn btn-default" style="float: right;">Back</a>
+        <div class="container-fluid">
+
+            <!-- Create Dish Card -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                            <h3 class="card-title mb-0">Create Delicious Dish</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <!-- Validation Errors -->
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <i class="fas fa-exclamation-circle"></i> Please fix the errors below.
+                                    <ul class="mt-2">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+
+                            <!-- Create Form -->
+                            <form action="/dish" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="name">Dish Name</label>
+                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="Enter Dish Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <select name="category" class="form-control">
+                                        <option value="">Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dish_image">Image</label>
+                                    <input type="file" name="dish_image" class="form-control-file">
+                                </div>
+
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Submit
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.Create Dish Card -->
+
         </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <form action="/dish" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="">Name</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="">Category</label>
-                    <select name="category" id="" class="form-control">
-                        <option value="">Select Category</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="">Image</label><br>
-                    <input type="file" name="dish_image" class="form">
-                </div>
-                <button type="submit" class="btn btn-success">Submit</button>
-            </form>
-        </div>
-        <!-- /.card-body -->
     </div>
-          </div>
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+    <!-- /.Main Content -->
+</div>
+<!-- /.Content Wrapper -->
+
 @endsection

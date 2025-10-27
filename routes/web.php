@@ -22,12 +22,12 @@ Route::post('order_submit', [OrderController::class, 'submit'])->name('order.sub
 //This is DishesController in Kitchen
 Route::resource('dish', DishesController::class);
 //This is OrderController in Kitchen
-Route::get('order', [DishesController::class, 'order'])->name('kitchen.order');
+Route::get('order', [DishesController::class, 'order'])->name('auth.kitchen.order');
 Route::get('order/{order}/approve', [DishesController::class, 'approve']);
-Route::get('order/{order}/cancel', [DishesController::class, 'cancel'])->name('kitchen.order');
-Route::get('order/{order}/ready', [DishesController::class, 'ready'])->name('kitchen.order');
+Route::get('order/{order}/cancel', [DishesController::class, 'cancel']);
+Route::get('order/{order}/ready', [DishesController::class, 'ready']);
 
-Route::get('order/{order}/serve', [OrderController::class, 'serve'])->name('kitchen.order');
+Route::get('order/{order}/serve', [OrderController::class, 'serve']);
 
 
 
